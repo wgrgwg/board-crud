@@ -14,4 +14,8 @@ public final class BoardView {
     public void displayException(String exceptionMessage){
         System.out.println("[ERROR] " + exceptionMessage);
     }
+
+    public void displayExit(){
+        System.out.println("프로그램이 종료됩니다.");
+    }
 }
