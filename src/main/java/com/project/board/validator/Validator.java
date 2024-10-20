@@ -12,7 +12,7 @@ public final class Validator {
 
     private static void checkCommand(String input) {
         if(!isValidCommand(input)){
-            throw new IllegalArgumentException("Wrong command");
+            throw new IllegalArgumentException("존재하지 않는 명령어 입니다.");
         }
     }
 
