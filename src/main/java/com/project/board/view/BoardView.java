@@ -10,4 +10,8 @@ public final class BoardView {
 
         return scanner.nextLine();
     }
+
+    public void displayException(String exceptionMessage){
+        System.out.println("[ERROR] " + exceptionMessage);
+    }
 }
