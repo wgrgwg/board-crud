@@ -33,6 +33,10 @@ public class Post {
         this.content = content;
     }
 
+    public int getIdCounter(){
+        return idCounter;
+    }
+
     @Override
     public String toString() {
         return "Post{" +
