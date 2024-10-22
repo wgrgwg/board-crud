@@ -1,15 +1,20 @@
 package com.project.board;
 
+import com.project.board.controller.BoardController;
+import com.project.board.repository.PostRepository;
+import com.project.board.service.PostService;
+import com.project.board.view.BoardView;
 import java.util.Scanner;
 
 public class Application {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
+        BoardView boardView = new BoardView();
+        PostRepository postRepository = new PostRepository();
+        PostService postService = new PostService(postRepository);
 
-        System.out.println("한글도 입력 : ");
-        String string = sc.nextLine();
+        BoardController boardController = new BoardController(boardView, postService);
 
-        System.out.println(string);
+        boardController.run();
     }
 }
