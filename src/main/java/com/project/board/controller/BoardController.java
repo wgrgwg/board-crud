@@ -32,6 +32,7 @@ public final class BoardController {
             case READ -> readPost();
             case UPDATE -> updatePost();
             case DELETE -> deletePost();
+            case READALL -> readAllPost();
             case EXIT -> {
                 boardView.displayExit();
                 return false;
@@ -75,11 +76,22 @@ public final class BoardController {
         String title = boardView.getTitleInput().trim();
         String content = boardView.getContentInput();
 
-        postService.updatePost(id, title, content);
+        if(postService.updatePost(id, title, content)){
+            boardView.displaySuccess(id, Command.UPDATE);
+        };
     }
 
     private void deletePost() {
+        int id = readIdInput(Command.DELETE);
 
+        if(!postService.validatePostIdExists(id)){
+            boardView.displayPostNotFound(id);
+            return;
+        }
+
+        if(postService.deletePostById(id)) {
+            boardView.displaySuccess(id, Command.DELETE);
+        };
     }
 
     public String readCommandInput(){

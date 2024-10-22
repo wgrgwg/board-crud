@@ -54,4 +54,8 @@ public final class BoardView {
     public void displayUpdate(int id){
         System.out.println(id + "번 게시글을 수정합니다.");
     }
+
+    public void displaySuccess(int id, Command command){
+        System.out.println(id +"번 게시물이 성공적으로 " + command.getText() + "되었습니다!");
+    }
 }
