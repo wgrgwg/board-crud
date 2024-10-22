@@ -37,4 +37,8 @@ public final class PostService {
     public boolean deletePostById(int id) {
         return postRepository.deletePostById(id);
     }
+
+    public boolean validatePostIdExists(int id) {
+        return postRepository.findPostById(id) != null;
+    }
 }

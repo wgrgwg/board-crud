@@ -10,6 +10,20 @@ public final class Validator {
         return input;
     }
 
+    public static int validateId(String input) throws IllegalArgumentException {
+        String number = input.replaceAll("[^0-9]", "");
+
+        return Integer.parseInt(number);
+    }
+
+    public static String validateTitleAndContent(String input) throws IllegalArgumentException {
+        if(input.isBlank() || input.isEmpty()){
+            throw new IllegalArgumentException("빈 문자열입니다.");
+        }
+
+        return input;
+    }
+
     private static void checkCommand(String input) {
         if(!isValidCommand(input)){
             throw new IllegalArgumentException("존재하지 않는 명령어 입니다.");

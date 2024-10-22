@@ -1,27 +1,70 @@
 package com.project.board.controller;
 
+import com.project.board.constants.Command;
+import com.project.board.model.Post;
+import com.project.board.service.PostService;
 import com.project.board.validator.Validator;
 import com.project.board.view.BoardView;
 
 public final class BoardController {
 
     private BoardView boardView;
+    private PostService postService;
 
-    public BoardController(BoardView boardView) {
+    public BoardController(BoardView boardView, PostService postService) {
         this.boardView = boardView;
+        this.postService = postService;
     }
 
     public void run(){
         while(true){
             String command = readCommandInput();
 
-            if(command.equals("종료")){
-                boardView.displayExit();
+            if(!executeCommand(Command.valueOf(command))){
                 break;
             }
-
-            System.out.println(command);
         }
+    }
+
+    public boolean executeCommand(Command command){
+        switch (command){
+            case CREATE -> createPost();
+            case READ -> readPost();
+            case UPDATE -> updatePost();
+            case DELETE -> deletePost();
+            case EXIT -> {
+                boardView.displayExit();
+                return false;
+            }
+        }
+        
+        return true;
+    }
+
+    private void createPost() {
+        String title = readTitleInput();
+        String content = readContentInput();
+
+        postService.addPost(title, content);
+    }
+
+    private void readPost() {
+        int id = readIdInput(Command.READ);
+
+        if(!postService.validatePostIdExists(id)){
+            System.out.println("다시");
+            return;
+        }
+
+        displayPost();
+    }
+
+    private void updatePost() {
+        
+    }
+
+    private void deletePost() {
+        
     }
 
     public String readCommandInput(){
@@ -29,7 +72,7 @@ public final class BoardController {
 
         while(true){
             try {
-                commandInput = Validator.validateCommandInput(boardView.getCommandInput());
+                commandInput = Validator.validateCommandInput(boardView.getCommandInput().trim());
                 break;
             } catch (IllegalArgumentException e){
                 boardView.displayException(e.getMessage());
@@ -37,5 +80,17 @@ public final class BoardController {
         }
 
         return commandInput;
+    }
+
+    public int readIdInput(Command command){
+        return Validator.validateId(boardView.getIdInput(command).trim());
+    }
+
+    public String readTitleInput(){
+        return Validator.validateTitleAndContent(boardView.getTitleInput().trim());
+    }
+
+    public String readContentInput(){
+        return Validator.validateTitleAndContent(boardView.getContentInput().trim());
     }
 }
