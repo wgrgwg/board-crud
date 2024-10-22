@@ -64,11 +64,22 @@ public final class BoardController {
     }
 
     private void updatePost() {
-        
+        int id = readIdInput(Command.UPDATE);
+
+        if(!postService.validatePostIdExists(id)){
+            boardView.displayPostNotFound(id);
+            return;
+        }
+
+        boardView.displayUpdate(id);
+        String title = boardView.getTitleInput().trim();
+        String content = boardView.getContentInput();
+
+        postService.updatePost(id, title, content);
     }
 
     private void deletePost() {
-        
+
     }
 
     public String readCommandInput(){

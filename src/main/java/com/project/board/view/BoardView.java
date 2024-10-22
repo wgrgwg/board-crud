@@ -9,28 +9,28 @@ public final class BoardView {
         Scanner scanner = new Scanner(System.in);
         System.out.print("명령어 > ");
 
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     public String getIdInput(Command command){
         Scanner scanner = new Scanner(System.in);
         System.out.print("어떤 게시물을 " + command.getText() + "할까요? ");
 
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     public String getTitleInput(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("제목 > ");
 
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     public String getContentInput(){
         Scanner scanner = new Scanner(System.in);
         System.out.print("본문 > ");
 
-        return scanner.nextLine();
+        return scanner.nextLine().trim();
     }
 
     public void displayException(String exceptionMessage){
@@ -49,5 +49,9 @@ public final class BoardView {
 
     public void displayPostNotFound(int id){
         System.out.println(id + "번 게시글은 존재하지 않습니다.");
+    }
+
+    public void displayUpdate(int id){
+        System.out.println(id + "번 게시글을 수정합니다.");
     }
 }
