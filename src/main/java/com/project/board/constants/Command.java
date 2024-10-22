@@ -17,4 +17,14 @@ public enum Command {
     public String getText() {
         return text;
     }
+
+    public static Command fromText(String text) {
+        for (Command command : Command.values()) {
+            if (command.getText().equals(text)) {
+                return command;
+            }
+        }
+
+        throw new IllegalArgumentException("해당하는 명령어가 없습니다: " + text);
+    }
 }

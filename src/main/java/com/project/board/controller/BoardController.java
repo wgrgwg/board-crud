@@ -21,9 +21,11 @@ public final class BoardController {
         while (true) {
             String command = readCommandInput();
 
-            if (!executeCommand(Command.valueOf(command))) {
+            if (!executeCommand(Command.fromText(command))) {
                 break;
             }
+
+            boardView.breakLine();
         }
     }
 
@@ -51,7 +53,14 @@ public final class BoardController {
     }
 
     private void readPost() {
-        int id = readIdInput(Command.READ);
+        int id;
+
+        try {
+            id = readIdInput(Command.READ);
+        } catch (IllegalArgumentException e) {
+            boardView.displayException(e.getMessage());
+            return;
+        }
 
         if (!postService.validatePostIdExists(id)) {
             boardView.displayPostNotFound(id);
@@ -64,7 +73,14 @@ public final class BoardController {
     }
 
     private void updatePost() {
-        int id = readIdInput(Command.UPDATE);
+        int id;
+
+        try {
+            id = readIdInput(Command.UPDATE);
+        } catch (IllegalArgumentException e) {
+            boardView.displayException(e.getMessage());
+            return;
+        }
 
         if (!postService.validatePostIdExists(id)) {
             boardView.displayPostNotFound(id);
@@ -78,21 +94,21 @@ public final class BoardController {
         if (postService.updatePost(id, title, content)) {
             boardView.displaySuccess(id, Command.UPDATE);
         }
-        ;
     }
 
     private void deletePost() {
-        int id = readIdInput(Command.DELETE);
+        int id;
 
-        if (!postService.validatePostIdExists(id)) {
-            boardView.displayPostNotFound(id);
+        try {
+            id = readIdInput(Command.DELETE);
+        } catch (IllegalArgumentException e) {
+            boardView.displayException(e.getMessage());
             return;
         }
 
         if (postService.deletePostById(id)) {
             boardView.displaySuccess(id, Command.DELETE);
         }
-        ;
     }
 
     public void readAllPost() {
@@ -102,6 +118,7 @@ public final class BoardController {
 
         for (Post post : posts) {
             boardView.displayPost(post.getId(), post.getTitle(), post.getContent());
+            boardView.breakLine();
         }
     }
 

@@ -13,7 +13,11 @@ public final class Validator {
     public static int validateId(String input) throws IllegalArgumentException {
         String number = input.replaceAll("[^0-9]", "");
 
-        return Integer.parseInt(number);
+        try {
+            return Integer.parseInt(number);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("게시글 번호는 숫자만 입력가능합니다.");
+        }
     }
 
     public static String validateTitleAndContent(String input) throws IllegalArgumentException {

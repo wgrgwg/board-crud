@@ -62,4 +62,8 @@ public final class BoardView {
     public void displayPostCount(int count) {
         System.out.println("총 게시글은 " + count + "개 작성되어있습니다.");
     }
+
+    public void breakLine() {
+        System.out.println();
+    }
 }
