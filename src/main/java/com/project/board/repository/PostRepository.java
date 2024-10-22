@@ -7,13 +7,13 @@ import java.util.List;
 public final class PostRepository {
     private List<Post> posts = new ArrayList<>();
 
-    public void addPost(Post post){
+    public void addPost(Post post) {
         posts.add(post);
     }
 
-    public Post findPostById(int id){
-        for(Post post : posts){
-            if(post.getId() == id){
+    public Post findPostById(int id) {
+        for (Post post : posts) {
+            if (post.getId() == id) {
                 return post;
             }
         }
@@ -21,9 +21,9 @@ public final class PostRepository {
         return null;
     }
 
-    public boolean deletePostById(int id){
-        for(Post post : posts){
-            if(post.getId() == id){
+    public boolean deletePostById(int id) {
+        for (Post post : posts) {
+            if (post.getId() == id) {
                 posts.remove(post);
                 return true;
             }
@@ -32,7 +32,7 @@ public final class PostRepository {
         return false;
     }
 
-    public List<Post> getAllPosts(){
+    public List<Post> getAllPosts() {
         return posts;
     }
 }

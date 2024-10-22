@@ -17,7 +17,7 @@ public final class Validator {
     }
 
     public static String validateTitleAndContent(String input) throws IllegalArgumentException {
-        if(input.isBlank() || input.isEmpty()){
+        if (input.isBlank() || input.isEmpty()) {
             throw new IllegalArgumentException("빈 문자열입니다.");
         }
 
@@ -25,7 +25,7 @@ public final class Validator {
     }
 
     private static void checkCommand(String input) {
-        if(!isValidCommand(input)){
+        if (!isValidCommand(input)) {
             throw new IllegalArgumentException("존재하지 않는 명령어 입니다.");
         }
     }

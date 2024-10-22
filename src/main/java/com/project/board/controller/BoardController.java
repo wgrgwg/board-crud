@@ -5,6 +5,7 @@ import com.project.board.model.Post;
 import com.project.board.service.PostService;
 import com.project.board.validator.Validator;
 import com.project.board.view.BoardView;
+import java.util.List;
 
 public final class BoardController {
 
@@ -16,18 +17,18 @@ public final class BoardController {
         this.postService = postService;
     }
 
-    public void run(){
-        while(true){
+    public void run() {
+        while (true) {
             String command = readCommandInput();
 
-            if(!executeCommand(Command.valueOf(command))){
+            if (!executeCommand(Command.valueOf(command))) {
                 break;
             }
         }
     }
 
-    public boolean executeCommand(Command command){
-        switch (command){
+    public boolean executeCommand(Command command) {
+        switch (command) {
             case CREATE -> createPost();
             case READ -> readPost();
             case UPDATE -> updatePost();
@@ -38,7 +39,7 @@ public final class BoardController {
                 return false;
             }
         }
-        
+
         return true;
     }
 
@@ -52,22 +53,20 @@ public final class BoardController {
     private void readPost() {
         int id = readIdInput(Command.READ);
 
-        if(!postService.validatePostIdExists(id)){
+        if (!postService.validatePostIdExists(id)) {
             boardView.displayPostNotFound(id);
             return;
         }
 
         Post post = postService.findPostById(id);
 
-        boardView.displayPost(
-            post.getId(), post.getTitle(), post.getContent()
-        );
+        boardView.displayPost(post.getId(), post.getTitle(), post.getContent());
     }
 
     private void updatePost() {
         int id = readIdInput(Command.UPDATE);
 
-        if(!postService.validatePostIdExists(id)){
+        if (!postService.validatePostIdExists(id)) {
             boardView.displayPostNotFound(id);
             return;
         }
@@ -76,32 +75,44 @@ public final class BoardController {
         String title = boardView.getTitleInput().trim();
         String content = boardView.getContentInput();
 
-        if(postService.updatePost(id, title, content)){
+        if (postService.updatePost(id, title, content)) {
             boardView.displaySuccess(id, Command.UPDATE);
-        };
+        }
+        ;
     }
 
     private void deletePost() {
         int id = readIdInput(Command.DELETE);
 
-        if(!postService.validatePostIdExists(id)){
+        if (!postService.validatePostIdExists(id)) {
             boardView.displayPostNotFound(id);
             return;
         }
 
-        if(postService.deletePostById(id)) {
+        if (postService.deletePostById(id)) {
             boardView.displaySuccess(id, Command.DELETE);
-        };
+        }
+        ;
     }
 
-    public String readCommandInput(){
+    public void readAllPost() {
+        List<Post> posts = postService.getAllPosts();
+
+        boardView.displayPostCount(posts.size());
+
+        for (Post post : posts) {
+            boardView.displayPost(post.getId(), post.getTitle(), post.getContent());
+        }
+    }
+
+    public String readCommandInput() {
         String commandInput;
 
-        while(true){
+        while (true) {
             try {
                 commandInput = Validator.validateCommandInput(boardView.getCommandInput().trim());
                 break;
-            } catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 boardView.displayException(e.getMessage());
             }
         }
@@ -109,15 +120,15 @@ public final class BoardController {
         return commandInput;
     }
 
-    public int readIdInput(Command command){
+    public int readIdInput(Command command) {
         return Validator.validateId(boardView.getIdInput(command).trim());
     }
 
-    public String readTitleInput(){
+    public String readTitleInput() {
         return Validator.validateTitleAndContent(boardView.getTitleInput().trim());
     }
 
-    public String readContentInput(){
+    public String readContentInput() {
         return Validator.validateTitleAndContent(boardView.getContentInput().trim());
     }
 }

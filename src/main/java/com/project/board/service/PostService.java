@@ -11,7 +11,7 @@ public final class PostService {
         this.postRepository = postRepository;
     }
 
-    public void addPost(String title, String content){
+    public void addPost(String title, String content) {
         Post post = new Post(title, content);
         postRepository.addPost(post);
     }

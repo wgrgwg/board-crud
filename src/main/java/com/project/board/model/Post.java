@@ -33,7 +33,7 @@ public class Post {
         this.content = content;
     }
 
-    public int getIdCounter(){
+    public int getIdCounter() {
         return idCounter;
     }
 
