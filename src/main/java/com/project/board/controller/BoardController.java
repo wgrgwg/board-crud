@@ -52,11 +52,15 @@ public final class BoardController {
         int id = readIdInput(Command.READ);
 
         if(!postService.validatePostIdExists(id)){
-            System.out.println("다시");
+            boardView.displayPostNotFound(id);
             return;
         }
 
-        displayPost();
+        Post post = postService.findPostById(id);
+
+        boardView.displayPost(
+            post.getId(), post.getTitle(), post.getContent()
+        );
     }
 
     private void updatePost() {

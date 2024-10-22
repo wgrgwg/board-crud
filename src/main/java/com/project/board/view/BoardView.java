@@ -40,4 +40,14 @@ public final class BoardView {
     public void displayExit(){
         System.out.println("프로그램이 종료됩니다.");
     }
+
+    public void displayPost(int id, String title, String content) {
+        System.out.println(id+"번 게시물");
+        System.out.println("제목 : " + title);
+        System.out.println("내용 : " + content);
+    }
+
+    public void displayPostNotFound(int id){
+        System.out.println(id + "번 게시글은 존재하지 않습니다.");
+    }
 }
