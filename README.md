@@ -12,6 +12,8 @@ CRUD 기능을 구현한 간단한 게시판 프로그램 구현
     - PostService를 validator가 접근?
         - **그냥 controller에서 validate하는 것으로 구현**
 
+### 2단계
+
 ## 트러블 슈팅
 
 ### 1단계
