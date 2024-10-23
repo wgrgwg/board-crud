@@ -4,7 +4,10 @@ public enum Feature {
     ADD("add"),
     VIEW("view"),
     EDIT("edit"),
-    REMOVE("remove");
+    REMOVE("remove"),
+    SIGNUP("signup"),
+    SIGNIN("signin"),
+    DETAIL("detail");
 
     private final String text;
 

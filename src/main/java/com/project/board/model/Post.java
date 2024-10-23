@@ -13,12 +13,12 @@ public class Post {
     private LocalDateTime createdDateTime;
     private LocalDateTime editedDateTime;
 
-    public Post(Board board, String title, String content, LocalDateTime createdDateTime) {
+    public Post(Board board, String title, String content) {
         this.id = idCounter++;
         this.board = board;
         this.title = title;
         this.content = content;
-        this.createdDateTime = createdDateTime;
+        this.createdDateTime = LocalDateTime.now();
     }
 
     public Board getBoard() {

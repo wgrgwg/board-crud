@@ -1,5 +1,6 @@
 package com.project.board.service;
 
+import com.project.board.model.Board;
 import com.project.board.model.Post;
 import com.project.board.repository.PostRepository;
 import java.util.List;
@@ -11,8 +12,8 @@ public final class PostService {
         this.postRepository = postRepository;
     }
 
-    public void addPost(String title, String content) {
-        Post post = new Post(title, content);
+    public void addPost(Board board, String title, String content) {
+        Post post = new Post(board, title, content);
         postRepository.addPost(post);
     }
 

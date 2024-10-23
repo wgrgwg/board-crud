@@ -1,6 +1,7 @@
 package com.project.board.controller;
 
 import com.project.board.constants.Command;
+import com.project.board.model.Board;
 import com.project.board.model.Post;
 import com.project.board.service.PostService;
 import com.project.board.validator.Validator;
@@ -46,10 +47,11 @@ public final class BoardController {
     }
 
     private void createPost() {
+        Board board = null;
         String title = readTitleInput();
         String content = readContentInput();
 
-        postService.addPost(title, content);
+        postService.addPost(board, title, content);
     }
 
     private void readPost() {
