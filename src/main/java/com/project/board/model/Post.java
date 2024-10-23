@@ -1,16 +1,28 @@
 package com.project.board.model;
 
+import java.time.LocalDateTime;
+
 public class Post {
 
     private static int idCounter = 1;
     private int id;
+    private Board board;
     private String title;
     private String content;
 
-    public Post(String title, String content) {
+    private LocalDateTime createdDateTime;
+    private LocalDateTime editedDateTime;
+
+    public Post(Board board, String title, String content, LocalDateTime createdDateTime) {
         this.id = idCounter++;
+        this.board = board;
         this.title = title;
         this.content = content;
+        this.createdDateTime = createdDateTime;
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public int getId() {
@@ -31,6 +43,18 @@ public class Post {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
+    }
+
+    public void setEditedDateTime(LocalDateTime editedDateTime) {
+        this.editedDateTime = editedDateTime;
+    }
+
+    public LocalDateTime getEditedDateTime() {
+        return editedDateTime;
     }
 
     @Override
