@@ -6,14 +6,8 @@ import com.project.board.model.Request;
 import java.util.Map;
 
 public final class RequestRepository {
-    private Request request;
 
-    public Request createRequest(Type type, Feature feature, Map<String, Object> params, boolean isSignIn) {
-        return new Request(type, feature, params, isSignIn);
+    public Request createRequest(Type type, Feature feature, Map<String, Object> params) {
+        return new Request(type, feature, params);
     }
-
-    public Request getRequest() {
-        return this.request;
-    }
-
 }

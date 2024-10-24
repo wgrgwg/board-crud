@@ -42,4 +42,14 @@ public final class Validator {
         }
         return false;
     }
+
+    public static String validateUrl(String input) throws IllegalArgumentException {
+        String[] parts = input.split("/");
+
+        if (parts.length != 3) {
+            throw new IllegalArgumentException("올바르지 않은 URL");
+        }
+
+        return input;
+    }
 }

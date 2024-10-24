@@ -2,7 +2,6 @@ package com.project.board.service;
 
 import com.project.board.constants.Feature;
 import com.project.board.constants.Type;
-import com.project.board.model.Account;
 import com.project.board.model.Request;
 import com.project.board.repository.RequestRepository;
 import java.util.LinkedHashMap;
@@ -15,15 +14,11 @@ public final class RequestService {
         this.requestRepository = requestRepository;
     }
 
-    public Request createRequest(String url, Account account) throws IllegalArgumentException {
+    public Request createRequest(String url) throws IllegalArgumentException {
         Type type;
         Feature feature;
-        Map<String, Object> params = new LinkedHashMap<>();
+        Map<String, Object> params;
         boolean isSigned = false;
-
-        if (account != null) {
-            isSigned = true;
-        }
 
         String[] args = url.split("\\?");
 
@@ -32,10 +27,16 @@ public final class RequestService {
         feature = Feature.fromText(pathPart.split("/")[2]);
 
         if (args.length == 1) {
-            return requestRepository.createRequest(type, feature, null, isSigned);
+            return requestRepository.createRequest(type, feature, null);
         }
 
-        String paramsPart = args[1];
+        params = stringToParams(args[1]);
+
+        return requestRepository.createRequest(type, feature, params);
+    }
+
+    public Map<String, Object> stringToParams(String paramsPart) {
+        Map<String, Object> params = new LinkedHashMap<>();
         String[] keyValueList = paramsPart.split("&");
 
         for (String keyValue : keyValueList) {
@@ -50,6 +51,6 @@ public final class RequestService {
             params.put(key, value);
         }
 
-        return requestRepository.createRequest(type, feature, params, isSigned);
+        return params;
     }
 }

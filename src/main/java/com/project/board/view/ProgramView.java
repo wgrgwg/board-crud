@@ -3,7 +3,7 @@ package com.project.board.view;
 import com.project.board.constants.Command;
 import java.util.Scanner;
 
-public final class BoardView {
+public final class ProgramView {
 
     public String getCommandInput() {
         Scanner scanner = new Scanner(System.in);
@@ -29,6 +29,13 @@ public final class BoardView {
     public String getContentInput() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("본문 > ");
+
+        return scanner.nextLine().trim();
+    }
+
+    public String getUrlInput(String user) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print(user + " > ");
 
         return scanner.nextLine().trim();
     }
