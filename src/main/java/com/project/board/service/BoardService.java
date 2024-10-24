@@ -39,4 +39,8 @@ public final class BoardService {
     public boolean validateBoardIdExists(int id) {
         return BoardRepository.findBoardById(id) != null;
     }
+
+    public boolean validateBoardNameExists(String name) {
+        return BoardRepository.findBoardByName(name) != null;
+    }
 }

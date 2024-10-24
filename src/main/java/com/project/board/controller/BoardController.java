@@ -43,15 +43,13 @@ public final class BoardController {
 
     private void readBoard(Map<String, Object> params) {
         String name = (String) params.get("boardName");
-        Board board;
 
-        try {
-            board = boardService.findBoardByName(name);
-        } catch (IllegalArgumentException e) {
+        if (!boardService.validateBoardNameExists(name)) {
             boardView.displayBoardNotFound(name);
             return;
         }
 
+        Board board = boardService.findBoardByName(name);
         List<Post> posts = board.getPosts();
 
         boardView.displayPosts(posts);
@@ -59,11 +57,8 @@ public final class BoardController {
 
     private void updateBoard(Map<String, Object> params) {
         int id = (int) params.get("boardId");
-        Board board;
 
-        try {
-            board = boardService.findBoardById(id);
-        } catch (IllegalArgumentException e) {
+        if (!boardService.validateBoardIdExists(id)) {
             boardView.displayBoardNotFound(id);
             return;
         }
@@ -83,11 +78,8 @@ public final class BoardController {
 
     private void deleteBoard(Map<String, Object> params) {
         int id = (int) params.get("boardId");
-        Board board;
 
-        try {
-            board = boardService.findBoardById(id);
-        } catch (IllegalArgumentException e) {
+        if (!boardService.validateBoardIdExists(id)) {
             boardView.displayBoardNotFound(id);
             return;
         }
