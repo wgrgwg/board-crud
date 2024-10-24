@@ -11,6 +11,16 @@ public class BoardRepository {
         boards.add(board);
     }
 
+    public Board findBoardByName(String name) {
+        for (Board board : boards) {
+            if (board.getName() == name) {
+                return board;
+            }
+        }
+
+        return null;
+    }
+
     public Board findBoardById(int id) {
         for (Board board : boards) {
             if (board.getId() == id) {
@@ -30,9 +40,5 @@ public class BoardRepository {
         }
 
         return false;
-    }
-
-    public List<Board> getAllBoards() {
-        return boards;
     }
 }

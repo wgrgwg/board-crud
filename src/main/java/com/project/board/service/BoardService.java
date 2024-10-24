@@ -2,7 +2,6 @@ package com.project.board.service;
 
 import com.project.board.model.Board;
 import com.project.board.repository.BoardRepository;
-import java.util.List;
 
 public final class BoardService {
     private final BoardRepository BoardRepository;
@@ -16,12 +15,8 @@ public final class BoardService {
         BoardRepository.addBoard(Board);
     }
 
-    public Board findBoardById(int id) {
-        return BoardRepository.findBoardById(id);
-    }
-
-    public List<Board> getAllBoards() {
-        return BoardRepository.getAllBoards();
+    public Board findBoardByName(String name) {
+        return BoardRepository.findBoardByName(name);
     }
 
     public boolean updateBoard(int id, String newName) {

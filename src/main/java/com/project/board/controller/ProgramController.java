@@ -16,6 +16,7 @@ public final class ProgramController {
     private ProgramView programView;
     private PostService postService;
     private RequestService requestService;
+    private BoardController boardController;
 
     public ProgramController(ProgramView programView, PostService postService, RequestService requestService) {
         this.programView = programView;
@@ -37,7 +38,14 @@ public final class ProgramController {
 
     public void newRun() {
         while (true) {
-            String url = readUrlInput(Request.getSession().getSignedAccount());
+            String url;
+            
+            try {
+                url = readUrlInput(Request.getSession().getSignedAccount());
+            } catch (IllegalArgumentException e) {
+                programView.displayException(e.getMessage());
+                continue;
+            }
 
             Request request = requestService.createRequest(url);
             executeRequest(request);
@@ -55,7 +63,7 @@ public final class ProgramController {
     }
 
     public void runBoard(Request request) {
-
+        boardController.run(request);
     }
 
     public void runPost(Request request) {
@@ -176,18 +184,18 @@ public final class ProgramController {
     }
 
     public int readIdInput(Command command) {
-        return Validator.validateId(programView.getIdInput(command).trim());
+        return Validator.validateId(programView.getIdInput(command));
     }
 
     public String readTitleInput() {
-        return Validator.validateTitleAndContent(programView.getTitleInput().trim());
+        return Validator.validateTitleAndContent(programView.getTitleInput());
     }
 
     public String readContentInput() {
-        return Validator.validateTitleAndContent(programView.getContentInput().trim());
+        return Validator.validateTitleAndContent(programView.getContentInput());
     }
 
     public String readUrlInput(Account account) {
-        return Validator.validateUrl(programView.getUrlInput(account.getUserId()).trim());
+        return Validator.validateUrl(programView.getUrlInput(account.getUserId()));
     }
 }

@@ -46,8 +46,20 @@ public final class Validator {
     public static String validateUrl(String input) throws IllegalArgumentException {
         String[] parts = input.split("/");
 
+        if (input.contains(" ")) {
+            throw new IllegalArgumentException("공백 문자가 포함된 URL");
+        }
+
         if (parts.length != 3) {
-            throw new IllegalArgumentException("올바르지 않은 URL");
+            throw new IllegalArgumentException("유효하지 않은 URL");
+        }
+
+        return input;
+    }
+
+    public static String validateBoardName(String input) throws IllegalArgumentException {
+        if (input.contains(" ")) {
+            throw new IllegalArgumentException("게시판 제목엔 공백 문자가 포함될 수 없습니다.");
         }
 
         return input;
