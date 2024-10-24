@@ -19,4 +19,20 @@ public final class BoardView {
                     String.format("%s / %s / %s", post.getId(), post.getTitle(), post.getCreatedDateTime().toString()));
         }
     }
+
+    public void displayException(String exceptionMessage) {
+        System.out.println("[ERROR] " + exceptionMessage);
+    }
+
+    public void displayBoardNotFound(int id) {
+        System.out.println(id + "번 게시판은 존재하지 않습니다.");
+    }
+
+    public void displayBoardNotFound(String name) {
+        System.out.println(String.format("게시판 이름 %s는 존재하지 않습니다.", name));
+    }
+
+    public void displaySuccess(String feature) {
+        System.out.println(String.format("게시판이 성공적으로 %s되었습니다.", feature));
+    }
 }

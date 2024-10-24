@@ -28,24 +28,72 @@ public final class BoardController {
     }
 
     private void createBoard() {
-        String name = readNameInput();
+        String name;
+
+        try {
+            name = readNameInput();
+        } catch (IllegalArgumentException e) {
+            boardView.displayException(e.getMessage());
+            return;
+        }
 
         boardService.addBoard(name);
+        boardView.displaySuccess("작성");
     }
 
     private void readBoard(Map<String, Object> params) {
         String name = (String) params.get("boardName");
-        Board board = boardService.findBoardByName(name);
+        Board board;
+
+        try {
+            board = boardService.findBoardByName(name);
+        } catch (IllegalArgumentException e) {
+            boardView.displayBoardNotFound(name);
+            return;
+        }
+
         List<Post> posts = board.getPosts();
-        
+
         boardView.displayPosts(posts);
     }
 
     private void updateBoard(Map<String, Object> params) {
+        int id = (int) params.get("boardId");
+        Board board;
+
+        try {
+            board = boardService.findBoardById(id);
+        } catch (IllegalArgumentException e) {
+            boardView.displayBoardNotFound(id);
+            return;
+        }
+
+        String newName;
+
+        try {
+            newName = readNameInput();
+        } catch (IllegalArgumentException e) {
+            boardView.displayException(e.getMessage());
+            return;
+        }
+
+        boardService.updateBoard(id, newName);
+        boardView.displaySuccess("수정");
     }
 
     private void deleteBoard(Map<String, Object> params) {
+        int id = (int) params.get("boardId");
+        Board board;
 
+        try {
+            board = boardService.findBoardById(id);
+        } catch (IllegalArgumentException e) {
+            boardView.displayBoardNotFound(id);
+            return;
+        }
+
+        boardService.deleteBoardById(id);
+        boardView.displaySuccess("삭제");
     }
 
     private String readNameInput() {

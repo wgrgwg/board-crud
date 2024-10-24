@@ -19,6 +19,10 @@ public final class BoardService {
         return BoardRepository.findBoardByName(name);
     }
 
+    public Board findBoardById(int id) {
+        return BoardRepository.findBoardById(id);
+    }
+
     public boolean updateBoard(int id, String newName) {
         Board Board = BoardRepository.findBoardById(id);
         if (Board != null) {
