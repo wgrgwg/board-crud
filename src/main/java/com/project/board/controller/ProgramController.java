@@ -38,15 +38,8 @@ public final class ProgramController {
 
     public void newRun() {
         while (true) {
-            String url;
+            String url = readUrlInput(Request.getSession().getSignedAccount());
             
-            try {
-                url = readUrlInput(Request.getSession().getSignedAccount());
-            } catch (IllegalArgumentException e) {
-                programView.displayException(e.getMessage());
-                continue;
-            }
-
             Request request = requestService.createRequest(url);
             executeRequest(request);
 
@@ -196,6 +189,17 @@ public final class ProgramController {
     }
 
     public String readUrlInput(Account account) {
-        return Validator.validateUrl(programView.getUrlInput(account.getUserId()));
+        String url;
+
+        while (true) {
+            try {
+                url = Validator.validateUrl(programView.getUrlInput(account.getUserId()));
+                break;
+            } catch (IllegalArgumentException e) {
+                programView.displayException(e.getMessage());
+            }
+        }
+
+        return url;
     }
 }
