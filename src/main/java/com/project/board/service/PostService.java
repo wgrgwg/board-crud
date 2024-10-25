@@ -3,6 +3,7 @@ package com.project.board.service;
 import com.project.board.model.Board;
 import com.project.board.model.Post;
 import com.project.board.repository.PostRepository;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public final class PostService {
@@ -30,6 +31,7 @@ public final class PostService {
         if (post != null) {
             post.setTitle(newTitle);
             post.setContent(newContent);
+            post.setEditedDateTime(LocalDateTime.now());
             return true;
         }
         return false;

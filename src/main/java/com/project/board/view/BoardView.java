@@ -15,8 +15,7 @@ public final class BoardView {
     public void displayPosts(List<Post> posts) {
         System.out.println("게시글 목록");
         for (Post post : posts) {
-            System.out.println(
-                    String.format("%s / %s / %s", post.getId(), post.getTitle(), post.getCreatedDateTime().toString()));
+            System.out.printf("%s / %s / %s%n", post.getId(), post.getTitle(), post.getCreatedDateTime().toString());
         }
     }
 
@@ -29,10 +28,10 @@ public final class BoardView {
     }
 
     public void displayBoardNotFound(String name) {
-        System.out.println(String.format("게시판 이름 %s는 존재하지 않습니다.", name));
+        System.out.printf("게시판 이름 %s는 존재하지 않습니다.%n", name);
     }
 
     public void displaySuccess(String feature) {
-        System.out.println(String.format("게시판이 성공적으로 %s되었습니다.", feature));
+        System.out.printf("게시판이 성공적으로 %s되었습니다.%n", feature);
     }
 }
