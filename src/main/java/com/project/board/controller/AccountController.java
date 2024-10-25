@@ -1,4 +1,4 @@
 package com.project.board.controller;
 
-public class AccountController {
+public final class AccountController {
 }

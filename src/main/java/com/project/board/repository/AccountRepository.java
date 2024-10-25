@@ -4,7 +4,7 @@ import com.project.board.model.Account;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountRepository {
+public final class AccountRepository {
     private static Account signedAccount = null;
     private final List<Account> accounts = new ArrayList<>();
 

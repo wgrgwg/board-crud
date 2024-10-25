@@ -4,7 +4,7 @@ import com.project.board.model.Board;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BoardRepository {
+public final class BoardRepository {
     private final List<Board> boards = new ArrayList<>();
 
     public void addBoard(Board board) {
