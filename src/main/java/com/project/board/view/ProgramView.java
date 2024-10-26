@@ -12,7 +12,7 @@ public final class ProgramView {
     }
 
     public void displayException(String exceptionMessage) {
-        System.out.println("[ERROR] " + exceptionMessage);
+        System.out.println(exceptionMessage);
     }
 
     public void breakLine() {

@@ -30,12 +30,13 @@ public final class RequestService {
             return requestRepository.createRequest(type, feature, null);
         }
 
-        params = stringToParams(args[1], type);
+        params = stringToParams(args[1], type, feature);
 
         return requestRepository.createRequest(type, feature, params);
     }
 
-    public Map<String, Object> stringToParams(String paramsPart, Type type) throws IllegalArgumentException {
+    public Map<String, Object> stringToParams(String paramsPart, Type type, Feature feature)
+            throws IllegalArgumentException {
         Map<String, Object> params = new LinkedHashMap<>();
         String[] keyValueList = paramsPart.split("&");
 
@@ -45,7 +46,10 @@ public final class RequestService {
             String key = keyValue.split("=")[0];
             String value = keyValue.split("=")[1];
 
+            Validator.validateTypeFeatureParameter(type, feature, key);
+
             if (key.endsWith("Id")) {
+                Validator.validateNumeric(value);
                 params.put(key, Integer.parseInt(value));
                 continue;
             }

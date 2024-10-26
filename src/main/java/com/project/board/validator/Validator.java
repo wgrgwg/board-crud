@@ -2,7 +2,11 @@ package com.project.board.validator;
 
 import com.project.board.constants.Command;
 import com.project.board.constants.Constant;
+import com.project.board.constants.Feature;
 import com.project.board.constants.Type;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 public final class Validator {
 
@@ -76,8 +80,31 @@ public final class Validator {
 
         String key = keyValue.split("=")[0];
 
-        if (!Constant.PARAM_KEYS.get(type).contains(key)) {
+        if (!Constant.PARAM_KEY_MAP.get(type).contains(key)) {
             throw new IllegalArgumentException("올바르지 않은 파라미터 key입니다.");
+        }
+    }
+
+    public static void validateNumeric(String value) throws IllegalArgumentException {
+        try {
+            Integer.parseInt(value);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("id 파라미터는 정수만 입력 가능합니다.");
+        }
+    }
+
+    public static void validateTypeFeatureParameter(Type type, Feature feature, String key)
+            throws IllegalArgumentException {
+        Map<String, Set<Feature>> keyFeatureMap = new HashMap<>();
+
+        switch (type) {
+            case BOARDS -> keyFeatureMap = Constant.BOARDS_FEATURE_KEP_MAP;
+            case POSTS -> keyFeatureMap = Constant.POST_FEATURE_KEP_MAP;
+            case ACCOUNTS -> keyFeatureMap = Constant.ACCOUNT_FEATURE_KEY_MAP;
+        }
+
+        if (!keyFeatureMap.get(key).contains(feature)) {
+            throw new IllegalArgumentException(String.format("기능 %s에 올바르지 않은 파라미터 key입니다.", feature.getText()));
         }
     }
 }

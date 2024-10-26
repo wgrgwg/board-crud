@@ -20,7 +20,7 @@ public final class BoardView {
     }
 
     public void displayException(String exceptionMessage) {
-        System.out.println("[ERROR] " + exceptionMessage);
+        System.out.println(exceptionMessage);
     }
 
     public void displayBoardNotFound(int id) {
