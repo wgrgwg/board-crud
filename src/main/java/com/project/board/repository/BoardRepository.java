@@ -13,7 +13,7 @@ public final class BoardRepository {
 
     public Board findBoardByName(String name) {
         for (Board board : boards) {
-            if (board.getName() == name) {
+            if (board.getName().equals(name)) {
                 return board;
             }
         }

@@ -5,16 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class AccountRepository {
-    private static Account signedAccount = null;
     private final List<Account> accounts = new ArrayList<>();
-
-    public static Account getSignedAccount() {
-        return signedAccount;
-    }
-
-    public static void setSignedAccount(Account signedAccount) {
-        AccountRepository.signedAccount = signedAccount;
-    }
 
     public List<Account> getAccounts() {
         return accounts;

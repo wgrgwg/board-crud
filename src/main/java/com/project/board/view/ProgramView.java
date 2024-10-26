@@ -18,4 +18,8 @@ public final class ProgramView {
     public void breakLine() {
         System.out.println();
     }
+
+    public void displayNoParamException() {
+        System.out.println("파라미터를 입력해주세요.");
+    }
 }

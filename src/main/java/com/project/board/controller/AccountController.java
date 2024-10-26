@@ -1,7 +1,6 @@
 package com.project.board.controller;
 
-import com.project.board.model.Board;
-import com.project.board.model.Post;
+import com.project.board.model.Account;
 import com.project.board.model.Request;
 import com.project.board.service.AccountService;
 import com.project.board.validator.Validator;
@@ -19,90 +18,119 @@ public final class AccountController {
 
     public void run(Request request) {
         switch (request.getFeature()) {
-            case ADD -> createAccount(request.getParams());
-            case VIEW -> readAccount(request.getParams());
-            case EDIT -> updatePost(request.getParams());
-            case REMOVE -> deletePost(request.getParams());
+            case SIGNUP -> createAccount();
+            case SIGNIN -> signinAccount();
+            case SIGNOUT -> signoutAccount();
+            case DETAIL -> detail(request.getParams());
+            case EDIT -> updateAccount(request.getParams());
+            case REMOVE -> deleteAccount(request.getParams());
         }
     }
 
-    public void createAccount(Map<String, Object> params) {
-        int id = (int) params.get("boardId");
-
-        if (!boardService.validateBoardIdExists(id)) {
-            postView.displayBoardNotFound(id);
-            return;
-        }
-
-        Board board = boardService.findBoardById(id);
-        String title;
-        String content;
+    public void createAccount() {
+        String userId, password, name, email;
 
         try {
-            title = readTitleInput();
-            content = readContentInput();
+            userId = readUserIdInput();
+            password = readPasswordInput();
+            name = readNameInput();
+            email = readEmailInput();
         } catch (IllegalArgumentException e) {
-            postView.displayException(e.getMessage());
+            accountView.displayException(e.getMessage());
             return;
         }
 
-        postService.addPost(board, title, content);
-        postView.displaySuccess("작성");
+        accountService.addAccount(userId, password, name, email);
+        accountView.displaySuccess("작성");
     }
 
-    public void readPost(Map<String, Object> params) {
-        int id = (int) params.get("postId");
-
-        if (!postService.validatePostIdExists(id)) {
-            postView.displayPostNotFound(id);
-            return;
-        }
-
-        Post post = accountService.findPostById(id);
-        postView.displayPost(id, post.getCreatedDateTime(), post.getEditedDateTime(), post.getTitle(),
-                post.getContent());
-    }
-
-    public void updatePost(Map<String, Object> params) {
-        int id = (int) params.get("postId");
-
-        if (!postService.validatePostIdExists(id)) {
-            postView.displayPostNotFound(id);
-            return;
-        }
-
-        String title;
-        String content;
+    public void signinAccount() {
+        String userId, password;
 
         try {
-            title = readTitleInput();
-            content = readContentInput();
+            userId = readUserIdInput();
+            password = readPasswordInput();
+            accountService.signIn(userId, password);
         } catch (IllegalArgumentException e) {
-            postView.displayException(e.getMessage());
+            accountView.displayException(e.getMessage());
             return;
         }
 
-        postService.updatePost(id, title, content);
-        postView.displaySuccess("수정");
+        accountView.displaySuccess("로그인");
     }
 
-    public void deletePost(Map<String, Object> params) {
-        int id = (int) params.get("postId");
-
-        if (!boardService.validateBoardIdExists(id)) {
-            postView.displayPostNotFound(id);
+    public void signoutAccount() {
+        try {
+            accountService.signout();
+        } catch (IllegalArgumentException e) {
+            accountView.displayException(e.getMessage());
             return;
         }
 
-        postService.deletePostById(id);
-        postView.displaySuccess("삭제");
+        accountView.displaySuccess("로그아웃");
     }
 
-    public String readTitleInput() {
-        return Validator.validateTitleAndContent(postView.getTitleInput());
+    public void detail(Map<String, Object> params) {
+        int id = (int) params.get("accountId");
+
+        if (!accountService.validateAccountIdExists(id)) {
+            accountView.displayAccountNotFound(id);
+            return;
+        }
+
+        Account account = accountService.findAccountById(id);
+        accountView.displayAccount(account.getId(), account.getUserId(), account.getEmail(),
+                account.getCreatedDateTime());
     }
 
-    public String readContentInput() {
-        return Validator.validateTitleAndContent(postView.getContentInput());
+    public void updateAccount(Map<String, Object> params) {
+        int id = (int) params.get("accountId");
+
+        if (!accountService.validateAccountIdExists(id)) {
+            accountView.displayAccountNotFound(id);
+            return;
+        }
+
+        String password;
+        String email;
+
+        try {
+            password = readPasswordInput();
+            email = readEmailInput();
+        } catch (IllegalArgumentException e) {
+            accountView.displayException(e.getMessage());
+            return;
+        }
+
+        accountService.updateAccount(id, password, email);
+        accountView.displaySuccess("수정");
+    }
+
+    public void deleteAccount(Map<String, Object> params) {
+        int id = (int) params.get("accountId");
+
+        if (!accountService.validateAccountIdExists(id)) {
+            accountView.displayAccountNotFound(id);
+            return;
+        }
+
+        accountService.deleteAccountById(id);
+        accountView.displaySuccess("삭제");
+    }
+
+    public String readUserIdInput() {
+        return Validator.validateAccountInfo(accountView.getUserIdInput());
+    }
+
+    public String readPasswordInput() {
+        return Validator.validateAccountInfo(accountView.getPasswordInput());
+    }
+
+    public String readNameInput() {
+        return Validator.validateAccountInfo(accountView.getNameInput());
+    }
+
+    public String readEmailInput() {
+        return Validator.validateAccountInfo(accountView.getEmailInput());
     }
 }

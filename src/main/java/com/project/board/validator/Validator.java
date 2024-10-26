@@ -1,28 +1,26 @@
 package com.project.board.validator;
 
 import com.project.board.constants.Command;
+import com.project.board.constants.Constant;
+import com.project.board.constants.Type;
 
 public final class Validator {
-
-    public static String validateCommandInput(String input) throws IllegalArgumentException {
-        checkCommand(input);
-
-        return input;
-    }
-
-    public static int validateId(String input) throws IllegalArgumentException {
-        String number = input.replaceAll("[^0-9]", "");
-
-        try {
-            return Integer.parseInt(number);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("게시글 번호는 숫자만 입력가능합니다.");
-        }
-    }
 
     public static String validateTitleAndContent(String input) throws IllegalArgumentException {
         if (input.isBlank() || input.isEmpty()) {
             throw new IllegalArgumentException("빈 문자열입니다.");
+        }
+
+        return input;
+    }
+
+    public static String validateAccountInfo(String input) throws IllegalArgumentException {
+        if (input.isBlank() || input.isEmpty()) {
+            throw new IllegalArgumentException("빈 문자열입니다.");
+        }
+
+        if (input.contains(" ")) {
+            throw new IllegalArgumentException("공백 문자를 포함할 수 없습니다.");
         }
 
         return input;
@@ -54,6 +52,12 @@ public final class Validator {
             throw new IllegalArgumentException("유효하지 않은 URL");
         }
 
+        for (int i = 1; i < parts.length; i++) {
+            if (parts[i].isEmpty()) {
+                throw new IllegalArgumentException("유효하지 않은 URL");
+            }
+        }
+
         return input;
     }
 
@@ -63,5 +67,17 @@ public final class Validator {
         }
 
         return input;
+    }
+
+    public static void validateParamKeyValue(Type type, String keyValue) throws IllegalArgumentException {
+        if (keyValue.split("=").length < 2) {
+            throw new IllegalArgumentException("올바르지 않은 파라미터입니다.");
+        }
+
+        String key = keyValue.split("=")[0];
+
+        if (!Constant.PARAM_KEYS.get(type).contains(key)) {
+            throw new IllegalArgumentException("올바르지 않은 파라미터 key입니다.");
+        }
     }
 }

@@ -27,8 +27,12 @@ public final class ProgramController {
         while (true) {
             String url = readUrlInput(Request.getSession().getSignedAccount());
 
-            Request request = requestService.createRequest(url);
-            executeRequest(request);
+            try {
+                Request request = requestService.createRequest(url);
+                executeRequest(request);
+            } catch (IllegalArgumentException e) {
+                programView.displayException(e.getMessage());
+            }
 
             programView.breakLine();
         }
@@ -51,18 +55,23 @@ public final class ProgramController {
     }
 
     public void runAccount(Request request) {
-
+        accountController.run(request);
     }
 
     public String readUrlInput(Account account) {
         String url;
+        String signedUserName = "손님";
+        if (account != null) {
+            signedUserName = account.getName();
+        }
 
         while (true) {
             try {
-                url = Validator.validateUrl(programView.getUrlInput(account.getUserId()));
+                url = Validator.validateUrl(programView.getUrlInput(signedUserName));
                 break;
             } catch (IllegalArgumentException e) {
                 programView.displayException(e.getMessage());
+                programView.breakLine();
             }
         }
 

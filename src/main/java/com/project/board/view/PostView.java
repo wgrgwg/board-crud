@@ -27,7 +27,7 @@ public final class PostView {
     }
 
     public void displaySuccess(String feature) {
-        System.out.println(String.format("게시물이 성공적으로 %s되었습니다.", feature));
+        System.out.printf("게시물이 성공적으로 %s되었습니다.%n", feature);
     }
 
     public void displayPostNotFound(int id) {

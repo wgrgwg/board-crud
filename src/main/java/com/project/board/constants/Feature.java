@@ -7,6 +7,7 @@ public enum Feature {
     REMOVE("remove"),
     SIGNUP("signup"),
     SIGNIN("signin"),
+    SIGNOUT("signout"),
     DETAIL("detail");
 
     private final String text;

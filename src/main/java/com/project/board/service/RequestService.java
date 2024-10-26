@@ -4,6 +4,7 @@ import com.project.board.constants.Feature;
 import com.project.board.constants.Type;
 import com.project.board.model.Request;
 import com.project.board.repository.RequestRepository;
+import com.project.board.validator.Validator;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,7 +19,6 @@ public final class RequestService {
         Type type;
         Feature feature;
         Map<String, Object> params;
-        boolean isSigned = false;
 
         String[] args = url.split("\\?");
 
@@ -30,20 +30,22 @@ public final class RequestService {
             return requestRepository.createRequest(type, feature, null);
         }
 
-        params = stringToParams(args[1]);
+        params = stringToParams(args[1], type);
 
         return requestRepository.createRequest(type, feature, params);
     }
 
-    public Map<String, Object> stringToParams(String paramsPart) {
+    public Map<String, Object> stringToParams(String paramsPart, Type type) throws IllegalArgumentException {
         Map<String, Object> params = new LinkedHashMap<>();
         String[] keyValueList = paramsPart.split("&");
 
         for (String keyValue : keyValueList) {
+            Validator.validateParamKeyValue(type, keyValue);
+
             String key = keyValue.split("=")[0];
             String value = keyValue.split("=")[1];
 
-            if (value.endsWith("Id")) {
+            if (key.endsWith("Id")) {
                 params.put(key, Integer.parseInt(value));
                 continue;
             }

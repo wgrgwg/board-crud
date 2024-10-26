@@ -23,17 +23,15 @@ public final class BoardService {
         return BoardRepository.findBoardById(id);
     }
 
-    public boolean updateBoard(int id, String newName) {
+    public void updateBoard(int id, String newName) {
         Board Board = BoardRepository.findBoardById(id);
         if (Board != null) {
             Board.setName(newName);
-            return true;
         }
-        return false;
     }
 
-    public boolean deleteBoardById(int id) {
-        return BoardRepository.deleteBoardById(id);
+    public void deleteBoardById(int id) {
+        BoardRepository.deleteBoardById(id);
     }
 
     public boolean validateBoardIdExists(int id) {
