@@ -56,3 +56,4 @@ CRUD 기능을 구현한 간단한 게시판 프로그램 구현
 - 필드로 `Board`는 `List<Post>`를 갖고, `Post`는 `Board`를 갖음
     - 일단 controller 단에서 각각의 service를 호출해서 해결
     - 해결 방법?
+    - 일단 model 설계가 잘못된듯...

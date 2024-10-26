@@ -114,6 +114,10 @@ public final class AccountController {
             return;
         }
 
+        if (Request.getSession().getSignedAccount() == accountService.findAccountById(id)) {
+            signoutAccount();
+        }
+
         accountService.deleteAccountById(id);
         accountView.displaySuccess("삭제");
     }
