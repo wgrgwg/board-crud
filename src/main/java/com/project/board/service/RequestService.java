@@ -26,6 +26,8 @@ public final class RequestService {
         type = Type.fromText(pathPart.split("/")[1]);
         feature = Feature.fromText(pathPart.split("/")[2]);
 
+        Validator.validateTypeFeature(type, feature);
+
         if (args.length == 1) {
             return requestRepository.createRequest(type, feature, null);
         }

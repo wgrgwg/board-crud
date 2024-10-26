@@ -45,6 +45,10 @@ public final class AccountController {
     }
 
     public void signinAccount() {
+        if (Request.getSession().getSignedAccount() != null) {
+            throw new IllegalArgumentException("이미 로그인된 계정이 있습니다.");
+        }
+
         String userId, password;
 
         try {

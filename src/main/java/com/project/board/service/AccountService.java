@@ -18,10 +18,6 @@ public final class AccountService {
     }
 
     public void signIn(String userId, String password) throws IllegalArgumentException {
-        if (Request.getSession().getSignedAccount() != null) {
-            throw new IllegalArgumentException("이미 로그인된 계정이 있습니다.");
-        }
-
         Account account = accountRepository.findAccountByUserIdPassword(userId, password);
 
         if (account == null) {

@@ -46,7 +46,7 @@ public final class AccountView {
     }
 
     public void displayAccount(int id, String userId, String email, LocalDateTime createdTime) {
-        System.out.printf("[%d]번 게시글%n", id);
+        System.out.printf("[%d]번 회원%n", id);
         System.out.println("계정 : " + userId);
         System.out.println("이메일 : " + email);
         System.out.println("가입일 : " + createdTime.toString());

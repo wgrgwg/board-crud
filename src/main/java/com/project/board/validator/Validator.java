@@ -1,6 +1,5 @@
 package com.project.board.validator;
 
-import com.project.board.constants.Command;
 import com.project.board.constants.Constant;
 import com.project.board.constants.Feature;
 import com.project.board.constants.Type;
@@ -28,21 +27,6 @@ public final class Validator {
         }
 
         return input;
-    }
-
-    private static void checkCommand(String input) {
-        if (!isValidCommand(input)) {
-            throw new IllegalArgumentException("존재하지 않는 명령어 입니다.");
-        }
-    }
-
-    public static boolean isValidCommand(String inputText) {
-        for (Command command : Command.values()) {
-            if (command.getText().equals(inputText)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public static String validateUrl(String input) throws IllegalArgumentException {
@@ -90,6 +74,13 @@ public final class Validator {
             Integer.parseInt(value);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("id 파라미터는 정수만 입력 가능합니다.");
+        }
+    }
+
+    public static void validateTypeFeature(Type type, Feature feature) throws IllegalArgumentException {
+        if (!Constant.TYPE_FEATURE_MAP.get(type).contains(feature)) {
+            throw new IllegalArgumentException(
+                    String.format("구분 %s에 올바르지 않은 기능 %s입니다.", type.getText(), feature.getText()));
         }
     }
 
