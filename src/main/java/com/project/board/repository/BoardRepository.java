@@ -1,6 +1,7 @@
 package com.project.board.repository;
 
 import com.project.board.model.Board;
+import com.project.board.model.Post;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,10 @@ public final class BoardRepository {
 
     public void addBoard(Board board) {
         boards.add(board);
+    }
+
+    public void addPostToBoard(Board board, Post post) {
+        board.addPost(post);
     }
 
     public Board findBoardByName(String name) {

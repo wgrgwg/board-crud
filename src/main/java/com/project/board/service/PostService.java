@@ -12,9 +12,11 @@ public final class PostService {
         this.postRepository = postRepository;
     }
 
-    public void addPost(Board board, String title, String content) {
+    public Post addPost(Board board, String title, String content) {
         Post post = new Post(board, title, content);
         postRepository.addPost(post);
+
+        return post;
     }
 
     public Post findPostById(int id) {

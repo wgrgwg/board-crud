@@ -48,5 +48,11 @@ CRUD 기능을 구현한 간단한 게시판 프로그램 구현
 #### MVC Pattern
 
 - 모델 별로 각각 model, view, controller 생성
-    - Application의 `main` 함수에서 **복잡한 의존 관계**
-    - 복잡한 생성자 정리 방법?
+    - Application의 `main` 함수에서 **복잡한 생성자**
+
+#### `Post` - `Board` 관계
+
+- `Board`와 `Post`는 복잡하게 연결되어 있음
+- 필드로 `Board`는 `List<Post>`를 갖고, `Post`는 `Board`를 갖음
+    - 일단 controller 단에서 각각의 service를 호출해서 해결
+    - 해결 방법?

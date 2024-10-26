@@ -19,6 +19,10 @@ public class Board {
         return posts;
     }
 
+    public void addPost(Post post) {
+        posts.add(post);
+    }
+
     public int getId() {
         return id;
     }

@@ -1,6 +1,7 @@
 package com.project.board.service;
 
 import com.project.board.model.Board;
+import com.project.board.model.Post;
 import com.project.board.repository.BoardRepository;
 
 public final class BoardService {
@@ -13,6 +14,10 @@ public final class BoardService {
     public void addBoard(String name) {
         Board Board = new Board(name);
         BoardRepository.addBoard(Board);
+    }
+
+    public void addPostToBoard(Board board, Post post) {
+        BoardRepository.addPostToBoard(board, post);
     }
 
     public Board findBoardByName(String name) {

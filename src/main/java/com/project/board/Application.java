@@ -28,16 +28,17 @@ public class Application {
         BoardView boardView = new BoardView();
         BoardRepository boardRepository = new BoardRepository();
         BoardService boardService = new BoardService(boardRepository);
-        BoardController boardController = new BoardController(boardService, boardView);
 
         PostView postView = new PostView();
         PostRepository postRepository = new PostRepository();
         PostService postService = new PostService(postRepository);
-        PostController postController = new PostController(postService, postView, boardService);
 
         AccountView accountView = new AccountView();
         AccountRepository accountRepository = new AccountRepository();
         AccountService accountService = new AccountService(accountRepository);
+
+        PostController postController = new PostController(postService, postView, boardService);
+        BoardController boardController = new BoardController(boardService, boardView, postService);
         AccountController accountController = new AccountController(accountService, accountView);
 
         ProgramController programController = new ProgramController(

@@ -4,6 +4,7 @@ import com.project.board.model.Board;
 import com.project.board.model.Post;
 import com.project.board.model.Request;
 import com.project.board.service.BoardService;
+import com.project.board.service.PostService;
 import com.project.board.validator.Validator;
 import com.project.board.view.BoardView;
 import java.util.List;
@@ -12,10 +13,12 @@ import java.util.Map;
 public final class BoardController {
     private BoardService boardService;
     private BoardView boardView;
+    private PostService postService;
 
-    public BoardController(BoardService boardService, BoardView boardView) {
+    public BoardController(BoardService boardService, BoardView boardView, PostService postService) {
         this.boardService = boardService;
         this.boardView = boardView;
+        this.postService = postService;
     }
 
     public void run(Request request) {
@@ -82,6 +85,13 @@ public final class BoardController {
         if (!boardService.validateBoardIdExists(id)) {
             boardView.displayBoardNotFound(id);
             return;
+        }
+
+        Board board = boardService.findBoardById(id);
+        List<Post> posts = board.getPosts();
+
+        for (Post post : posts) {
+            postService.deletePostById(post.getId());
         }
 
         boardService.deleteBoardById(id);

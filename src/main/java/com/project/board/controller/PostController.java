@@ -48,8 +48,8 @@ public final class PostController {
             postView.displayException(e.getMessage());
             return;
         }
-
-        postService.addPost(board, title, content);
+        
+        boardService.addPostToBoard(board, postService.addPost(board, title, content));
         postView.displaySuccess("작성");
     }
 
