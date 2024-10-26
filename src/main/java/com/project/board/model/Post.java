@@ -1,16 +1,29 @@
 package com.project.board.model;
 
+import java.time.LocalDateTime;
+
 public class Post {
 
     private static int idCounter = 1;
     private int id;
+    private Board board;
     private String title;
     private String content;
 
-    public Post(String title, String content) {
+    private LocalDateTime createdDateTime;
+    private LocalDateTime editedDateTime;
+
+    public Post(Board board, String title, String content) {
         this.id = idCounter++;
+        this.board = board;
         this.title = title;
         this.content = content;
+        this.createdDateTime = LocalDateTime.now();
+        this.editedDateTime = LocalDateTime.now();
+    }
+
+    public Board getBoard() {
+        return board;
     }
 
     public int getId() {
@@ -33,16 +46,23 @@ public class Post {
         this.content = content;
     }
 
-    public int getIdCounter() {
-        return idCounter;
+    public LocalDateTime getCreatedDateTime() {
+        return createdDateTime;
+    }
+
+    public void setEditedDateTime(LocalDateTime editedDateTime) {
+        this.editedDateTime = editedDateTime;
+    }
+
+    public LocalDateTime getEditedDateTime() {
+        return editedDateTime;
     }
 
     @Override
     public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+        return String.format(
+                "[%d]번 게시글%n작성일 : %s%n수정일 : %s%n제목 : %s%n내용 : %s",
+                id, createdDateTime.toString(), editedDateTime.toString(), title, content
+        );
     }
 }

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class PostRepository {
-    private List<Post> posts = new ArrayList<>();
+    private final List<Post> posts = new ArrayList<>();
 
     public void addPost(Post post) {
         posts.add(post);

@@ -1,151 +1,104 @@
 package com.project.board.controller;
 
-import com.project.board.constants.Command;
+import com.project.board.model.Board;
 import com.project.board.model.Post;
+import com.project.board.model.Request;
+import com.project.board.service.BoardService;
 import com.project.board.service.PostService;
 import com.project.board.validator.Validator;
 import com.project.board.view.BoardView;
 import java.util.List;
+import java.util.Map;
 
 public final class BoardController {
-
+    private BoardService boardService;
     private BoardView boardView;
     private PostService postService;
 
-    public BoardController(BoardView boardView, PostService postService) {
+    public BoardController(BoardService boardService, BoardView boardView, PostService postService) {
+        this.boardService = boardService;
         this.boardView = boardView;
         this.postService = postService;
     }
 
-    public void run() {
-        while (true) {
-            String command = readCommandInput();
-
-            if (!executeCommand(Command.fromText(command))) {
-                break;
-            }
-
-            boardView.breakLine();
+    public void run(Request request) {
+        switch (request.getFeature()) {
+            case ADD -> createBoard();
+            case VIEW -> readBoard(request.getParams());
+            case EDIT -> updateBoard(request.getParams());
+            case REMOVE -> deleteBoard(request.getParams());
         }
     }
 
-    public boolean executeCommand(Command command) {
-        switch (command) {
-            case CREATE -> createPost();
-            case READ -> readPost();
-            case UPDATE -> updatePost();
-            case DELETE -> deletePost();
-            case READALL -> readAllPost();
-            case EXIT -> {
-                boardView.displayExit();
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    private void createPost() {
-        String title = readTitleInput();
-        String content = readContentInput();
-
-        postService.addPost(title, content);
-    }
-
-    private void readPost() {
-        int id;
+    private void createBoard() {
+        String name;
 
         try {
-            id = readIdInput(Command.READ);
+            name = readNameInput();
         } catch (IllegalArgumentException e) {
             boardView.displayException(e.getMessage());
             return;
         }
 
-        if (!postService.validatePostIdExists(id)) {
-            boardView.displayPostNotFound(id);
+        boardService.addBoard(name);
+        boardView.displaySuccess("작성");
+    }
+
+    private void readBoard(Map<String, Object> params) {
+        String name = (String) params.get("boardName");
+
+        if (!boardService.validateBoardNameExists(name)) {
+            boardView.displayBoardNotFound(name);
             return;
         }
 
-        Post post = postService.findPostById(id);
+        Board board = boardService.findBoardByName(name);
+        List<Post> posts = board.getPosts();
 
-        boardView.displayPost(post.getId(), post.getTitle(), post.getContent());
+        boardView.displayPosts(posts);
     }
 
-    private void updatePost() {
-        int id;
+    private void updateBoard(Map<String, Object> params) {
+        int id = (int) params.get("boardId");
+
+        if (!boardService.validateBoardIdExists(id)) {
+            boardView.displayBoardNotFound(id);
+            return;
+        }
+
+        String newName;
 
         try {
-            id = readIdInput(Command.UPDATE);
+            newName = readNameInput();
         } catch (IllegalArgumentException e) {
             boardView.displayException(e.getMessage());
             return;
         }
 
-        if (!postService.validatePostIdExists(id)) {
-            boardView.displayPostNotFound(id);
+        boardService.updateBoard(id, newName);
+        boardView.displaySuccess("수정");
+    }
+
+    private void deleteBoard(Map<String, Object> params) {
+        int id = (int) params.get("boardId");
+
+        if (!boardService.validateBoardIdExists(id)) {
+            boardView.displayBoardNotFound(id);
             return;
         }
 
-        boardView.displayUpdate(id);
-        String title = boardView.getTitleInput().trim();
-        String content = boardView.getContentInput();
-
-        if (postService.updatePost(id, title, content)) {
-            boardView.displaySuccess(id, Command.UPDATE);
-        }
-    }
-
-    private void deletePost() {
-        int id;
-
-        try {
-            id = readIdInput(Command.DELETE);
-        } catch (IllegalArgumentException e) {
-            boardView.displayException(e.getMessage());
-            return;
-        }
-
-        if (postService.deletePostById(id)) {
-            boardView.displaySuccess(id, Command.DELETE);
-        }
-    }
-
-    public void readAllPost() {
-        List<Post> posts = postService.getAllPosts();
-
-        boardView.displayPostCount(posts.size());
+        Board board = boardService.findBoardById(id);
+        List<Post> posts = board.getPosts();
 
         for (Post post : posts) {
-            boardView.displayPost(post.getId(), post.getTitle(), post.getContent());
-            boardView.breakLine();
-        }
-    }
-
-    public String readCommandInput() {
-        String commandInput;
-
-        while (true) {
-            try {
-                commandInput = Validator.validateCommandInput(boardView.getCommandInput().trim());
-                break;
-            } catch (IllegalArgumentException e) {
-                boardView.displayException(e.getMessage());
-            }
+            postService.deletePostById(post.getId());
         }
 
-        return commandInput;
+        boardService.deleteBoardById(id);
+        boardView.displaySuccess("삭제");
     }
 
-    public int readIdInput(Command command) {
-        return Validator.validateId(boardView.getIdInput(command).trim());
-    }
-
-    public String readTitleInput() {
-        return Validator.validateTitleAndContent(boardView.getTitleInput().trim());
-    }
-
-    public String readContentInput() {
-        return Validator.validateTitleAndContent(boardView.getContentInput().trim());
+    private String readNameInput() {
+        return Validator.validateBoardName(boardView.getNameInput());
     }
 }

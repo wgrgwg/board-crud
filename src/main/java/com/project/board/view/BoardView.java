@@ -1,69 +1,37 @@
 package com.project.board.view;
 
-import com.project.board.constants.Command;
+import com.project.board.model.Post;
+import java.util.List;
 import java.util.Scanner;
 
 public final class BoardView {
-
-    public String getCommandInput() {
+    public String getNameInput() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("명령어 > ");
+        System.out.print("게시판 이름 > ");
 
         return scanner.nextLine().trim();
     }
 
-    public String getIdInput(Command command) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("어떤 게시물을 " + command.getText() + "할까요? ");
-
-        return scanner.nextLine().trim();
-    }
-
-    public String getTitleInput() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("제목 > ");
-
-        return scanner.nextLine().trim();
-    }
-
-    public String getContentInput() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("본문 > ");
-
-        return scanner.nextLine().trim();
+    public void displayPosts(List<Post> posts) {
+        System.out.println("게시글 목록");
+        for (Post post : posts) {
+            System.out.printf("%s / %s / %s%n", post.getId(), post.getTitle(), post.getCreatedDateTime().toString());
+        }
     }
 
     public void displayException(String exceptionMessage) {
-        System.out.println("[ERROR] " + exceptionMessage);
+        System.out.println(exceptionMessage);
     }
 
-    public void displayExit() {
-        System.out.println("프로그램이 종료됩니다.");
+    public void displayBoardNotFound(int id) {
+        System.out.println(id + "번 게시판은 존재하지 않습니다.");
     }
 
-    public void displayPost(int id, String title, String content) {
-        System.out.println(id + "번 게시물");
-        System.out.println("제목 : " + title);
-        System.out.println("내용 : " + content);
+    public void displayBoardNotFound(String name) {
+        System.out.printf("게시판 이름 %s는 존재하지 않습니다.%n", name);
     }
 
-    public void displayPostNotFound(int id) {
-        System.out.println(id + "번 게시글은 존재하지 않습니다.");
-    }
-
-    public void displayUpdate(int id) {
-        System.out.println(id + "번 게시글을 수정합니다.");
-    }
-
-    public void displaySuccess(int id, Command command) {
-        System.out.println(id + "번 게시물이 성공적으로 " + command.getText() + "되었습니다!");
-    }
-
-    public void displayPostCount(int count) {
-        System.out.println("총 게시글은 " + count + "개 작성되어있습니다.");
-    }
-
-    public void breakLine() {
-        System.out.println();
+    public void displaySuccess(String feature) {
+        System.out.printf("게시판이 성공적으로 %s되었습니다.%n", feature);
     }
 }
