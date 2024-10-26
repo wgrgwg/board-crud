@@ -48,7 +48,7 @@ public final class PostController {
             postView.displayException(e.getMessage());
             return;
         }
-        
+
         boardService.addPostToBoard(board, postService.addPost(board, title, content));
         postView.displaySuccess("작성");
     }
@@ -62,8 +62,7 @@ public final class PostController {
         }
 
         Post post = postService.findPostById(id);
-        postView.displayPost(id, post.getCreatedDateTime(), post.getEditedDateTime(), post.getTitle(),
-                post.getContent());
+        postView.displayPost(post.toString());
     }
 
     public void updatePost(Map<String, Object> params) {

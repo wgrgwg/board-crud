@@ -83,8 +83,7 @@ public final class AccountController {
         }
 
         Account account = accountService.findAccountById(id);
-        accountView.displayAccount(account.getId(), account.getUserId(), account.getEmail(),
-                account.getCreatedDateTime());
+        accountView.displayAccount(account.toString());
     }
 
     public void updateAccount(Map<String, Object> params) {

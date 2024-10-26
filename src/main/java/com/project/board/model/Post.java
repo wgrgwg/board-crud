@@ -60,10 +60,9 @@ public class Post {
 
     @Override
     public String toString() {
-        return "Post{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                '}';
+        return String.format(
+                "[%d]번 게시글%n작성일 : %s%n수정일 : %s%n제목 : %s%n내용 : %s",
+                id, createdDateTime.toString(), editedDateTime.toString(), title, content
+        );
     }
 }

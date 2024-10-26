@@ -1,6 +1,5 @@
 package com.project.board.view;
 
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public final class PostView {
@@ -34,11 +33,7 @@ public final class PostView {
         System.out.println(id + "번 게시글은 존재하지 않습니다.");
     }
 
-    public void displayPost(int id, LocalDateTime createdTime, LocalDateTime editedTime, String title, String content) {
-        System.out.printf("[%d]번 게시글%n", id);
-        System.out.println("작성일 : " + createdTime.toString());
-        System.out.println("수정일 : " + editedTime.toString());
-        System.out.println("제목 : " + title);
-        System.out.println("내용 : " + content);
+    public void displayPost(String postDetail) {
+        System.out.println(postDetail);
     }
 }

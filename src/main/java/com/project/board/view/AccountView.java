@@ -1,6 +1,5 @@
 package com.project.board.view;
 
-import java.time.LocalDateTime;
 import java.util.Scanner;
 
 public final class AccountView {
@@ -45,10 +44,7 @@ public final class AccountView {
         System.out.println(id + "번 회원은 존재하지 않습니다.");
     }
 
-    public void displayAccount(int id, String userId, String email, LocalDateTime createdTime) {
-        System.out.printf("[%d]번 회원%n", id);
-        System.out.println("계정 : " + userId);
-        System.out.println("이메일 : " + email);
-        System.out.println("가입일 : " + createdTime.toString());
+    public void displayAccount(String accountDetail) {
+        System.out.println(accountDetail);
     }
 }

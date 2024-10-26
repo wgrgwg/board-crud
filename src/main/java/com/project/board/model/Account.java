@@ -61,4 +61,12 @@ public class Account {
     public LocalDateTime getEditedDateTime() {
         return editedDateTime;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "[%d]번 회원%n계정 : %s%n이메일 : %s%n가입일 : %s",
+                id, userId, email, createdDateTime.toString()
+        );
+    }
 }
